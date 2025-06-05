@@ -1,0 +1,123 @@
+const express = require('express');
+const router = express.Router();
+const mysql = require('mysql2');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'main'
+});
+
+// Multer storage config for payment screenshots
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const appId = req.body.application_id;
+    if (!appId) return cb(new Error('Missing application_id'), null);
+    const baseDir = path.join(__dirname, '..', 'uploads', 'Payment', appId);
+    fs.mkdirSync(baseDir, { recursive: true });
+    cb(null, baseDir);
+  },
+  filename: function (req, file, cb) {
+    const timestamp = Date.now();
+    cb(null, `payment_${timestamp}${path.extname(file.originalname)}`);
+  }
+});
+const upload = multer({ storage: storage });
+
+// Get payment methods
+router.get('/methods', (req, res) => {
+  res.json([
+    {
+      type: 'GCash',
+      details: {
+        number: '0917-123-4567',
+        accountName: 'Pateros Technological College',
+        amount: 1000,
+        instructions: 'Use your Application ID as reference number'
+      }
+    },
+    {
+      type: 'PayMaya',
+      details: {
+        number: '0998-765-4321',
+        accountName: 'Pateros Technological College',
+        amount: 1000,
+        instructions: 'Use your Application ID as reference number'
+      }
+    },
+    {
+      type: 'Bank Transfer',
+      details: {
+        bank: 'BDO',
+        accountName: 'Pateros Technological College',
+        accountNumber: '1234-5678-9012',
+        amount: 1000,
+        instructions: 'Use your Application ID as reference number'
+      }
+    }
+  ]);
+});
+
+// Submit payment details
+router.post('/submit', (req, res) => {
+  const { application_id, method, reference_number, amount } = req.body;
+  if (!application_id || !method || !reference_number || !amount) {
+    return res.status(400).json({ error: 'Missing fields' });
+  }
+  db.query(
+    'INSERT INTO payments (application_id, method, reference_number, amount, status) VALUES (?, ?, ?, ?, ?)',
+    [application_id, method, reference_number, amount, 'Pending'],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: 'Database error' });
+      res.status(201).json({ message: 'Payment submitted. Awaiting verification.' });
+    }
+  );
+});
+
+// Upload payment screenshot
+router.post('/upload-screenshot', upload.single('screenshot'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded or missing application_id' });
+  }
+  res.status(200).json({ message: 'Screenshot uploaded', filename: req.file.filename });
+});
+
+// Update payment status
+router.post('/update-status', (req, res) => {
+  const { id, status } = req.body;
+  if (!id || !status) {
+    return res.status(400).json({ error: 'Missing id or status' });
+  }
+  db.query(
+    'UPDATE payments SET status = ? WHERE id = ?',
+    [status, id],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: 'Database error' });
+      res.status(200).json({ message: 'Payment status updated.' });
+    }
+  );
+});
+
+// Get payment history for a user
+router.get('/history/:application_id', (req, res) => {
+  const { application_id } = req.params;
+  db.query(
+    'SELECT id, method, reference_number, amount, status, created_at FROM payments WHERE application_id = ? ORDER BY created_at DESC',
+    [application_id],
+    (err, results) => {
+      if (err) return res.status(500).json({ error: 'Database error' });
+      // Capitalize first letter of status
+      const formatted = results.map(row => ({
+        ...row,
+        status: row.status.charAt(0).toUpperCase() + row.status.slice(1).toLowerCase()
+      }));
+      res.json(formatted);
+    }
+  );
+});
+
+module.exports = router;
