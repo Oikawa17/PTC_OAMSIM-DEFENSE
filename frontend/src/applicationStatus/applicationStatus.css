@@ -1,0 +1,197 @@
+.app-status-container {
+  min-width: 1000px;
+  margin: 40px auto;
+  margin-top: 100px;
+  padding: 32px 32px 32px 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(44,120,29,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.timeline-header,
+.app-status-header {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+
+.app-status-header {
+  color: #228c22;
+  padding-left: 60px;
+  margin-top: -20px;
+}
+
+.app-details-section {
+  color: #000000;
+  margin-left: 5px;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.app-details-section .application-details-title {
+  color: #000000;
+}
+
+.app-details-no-container {
+  color: #000000;
+  padding-left: -20px;
+}
+
+.details-status-divider { /*line under the header*/
+  border: 0;
+  height: 5px;
+  width: 98%;
+  margin: 0 auto 36px auto;
+  background: linear-gradient(90deg, #228c22 0%, #a8e063 50%, #228c22 100%);
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.timeline-subheader,
+.app-status-subheader {
+  padding-left: 6%;
+  color: #228c22;
+  margin-bottom: 3.5em;
+  font-size: 1.15rem;
+}
+
+.app-status-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 68px;
+  margin-top: 0;
+  padding-left: 15%;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+}
+
+.timeline-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 38px;
+  width: 3px;
+  height: calc(100% - -35px);
+  background: #000000;
+  z-index: 0;
+}
+
+.timeline-icon {
+  font-size: 28px;
+  color: #2461b6;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #d2e3e9;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -12px;
+  z-index: 1;
+}
+
+.timeline-step.completed .timeline-icon {
+  background: #c6ffc6;
+  color: #2ecc40;
+  border-color: #004e09;
+}
+
+.timeline-step.active .timeline-icon {
+  background: #e6f0fa;
+  color: #2461b6;
+  border-color: #2461b6;
+}
+
+.timeline-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 9px;
+}
+
+.timeline-desc {
+  color: #000000;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.timeline-date {
+  color: #888888;
+  font-size: 0.95rem;
+}
+
+.app-status-card {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.app-status-link {
+  cursor: pointer;
+}
+
+.app-status-icon {
+  font-size: 28px;
+  color: #2461b6;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #d2e3e9;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  margin-right: 18px;
+  z-index: 1;
+}
+
+.status-completed {
+  color: #2ecc40;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #e6ac00;
+  font-weight: bold;
+}
+
+/* When messages-sidebar is expanded, push main content further right */
+.messages-sidebar:not(.collapsed) + .app-status-container {
+  margin-left: 400px; /* 68px fixed + 220px expanded */
+}
+
+.app-status-doc-details {
+  margin-top: 4px;
+  font-size: 0.98rem;
+  color: #dd1010;
+}
+
+.main-content {
+  padding-left: 90px; /* or padding-left: 40px; */
+}
+
+.verified-png {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .app-status-container {
+    padding: 16px 4px;
+  }
+}

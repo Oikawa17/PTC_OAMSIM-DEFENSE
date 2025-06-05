@@ -1,0 +1,974 @@
+/* Import a modern font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@400;700&display=swap");
+
+/* Basic reset for consistent styling */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif; /* Prioritize Inter as primary font */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  overflow-x: hidden; /* Prevent horizontal scrollbar from layout shifts */
+}
+
+/* Inherit box-sizing for all elements */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/* Two-color gradient background for the whole page */
+body {
+  background: linear-gradient(135deg, #8ed88e 5%, #02460b 100%);
+}
+
+/* Overall Dashboard Container (for Sidebar and Main Content) */
+.dashboard-container {
+  display: flex; /* Establishes a flex container for sidebar and main content */
+  min-height: 100vh; /* Ensures the container takes at least full viewport height */
+}
+
+/* Application Form Container (from your provided CSS, moved here for clarity) */
+/* Note: Its margin suggests it's within the main content area, not wrapping it. */
+.application-form-container {
+  max-width: 1000px;
+  margin: 100px auto 32px 68px; /* Adjusted margin to push right for sidebar, then auto center */
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  padding: 36px 38px 32px 38px;
+}
+
+/* Main content area (right of sidebar) */
+.dashboard-main-content {
+  flex-grow: 1; /* Allows it to take up all available space */
+  margin-left: 68px; /* Default: only fixed sidebar, assuming sidebar is 68px fixed width */
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition for sidebar expand/collapse */
+  padding: 20px; /* Overall padding for the main content area */
+  overflow-y: auto; /* Allows scrolling if content exceeds viewport height */
+}
+
+/* When messages-sidebar is expanded, push main content further right */
+.messages-sidebar:not(.collapsed) + .dashboard-main-content {
+  margin-left: 288px; /* 68px fixed + 220px expanded */
+}
+
+/* Gradient text for all specified elements */
+.dashboard-main-content h1,
+.dashboard-main-content h2,
+.dashboard-main-content h3,
+.dashboard-main-content h4,
+.dashboard-main-content h5,
+.dashboard-main-content h6,
+.dashboard-main-content p,
+.dashboard-main-content span:not(.info-card-highlight),
+.dashboard-main-content .section-title,
+.dashboard-main-content .info-card-text,
+.dashboard-main-content .announcement-heading,
+.dashboard-main-content .info-heading,
+.dashboard-main-content .program-heading,
+.dashboard-main-content .contact-heading,
+/* Add the new announcement page titles/text here */
+.announcement-page-title,
+.announcement-page-date,
+.announcement-page-content {
+  background: linear-gradient(135deg, #000000 0%, #000000 100%);
+  color: transparent; /* Makes the original color transparent */
+  background-clip: text;
+  -webkit-background-clip: text; /* For WebKit browsers */
+  -webkit-text-fill-color: transparent; /* For WebKit browsers */
+  font-family: "Inter", "Montserrat", Arial, sans-serif;
+}
+
+/* Re-apply color for specific elements that shouldn't be black gradient */
+.announcement-detail,
+.announcement-date,
+.info-detail,
+.program-list li,
+.contact-address p,
+.contact-numbers p,
+.contact-email p,
+.contact-hours p {
+  color: #333 !important; /* Override gradient to ensure readability */
+  -webkit-text-fill-color: #333 !important;
+  background: none !important; /* Remove gradient background */
+  -webkit-background-clip: unset !important; /* Reset clip */
+}
+/* Ensure section titles keep their green color */
+.section-title,
+.program-heading,
+.contact-heading {
+  color: #2c781d !important; /* Darker green for titles, as specified */
+  -webkit-text-fill-color: #2c781d !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+}
+
+/* Dashboard Header Section (Top Green Section with Image and Text) */
+.dashboard-header {
+  font-family: "Montserrat", "Inter", Arial, sans-serif;
+  position: relative;
+  width: 100%;
+  height: 700px;
+  background-image: url("https://www.paterostechnologicalcollege.edu.ph/ASSETS/IMAGES/HOME/banner-ptc.png");
+  background-size: cover;
+  background-position: left center;
+  background-color: #227e42; /* Opaque green background */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 40px;
+  color: #b30b0b;
+  overflow: hidden;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  /* The animation will now handle the looping */
+  animation: image-loop 10s ease-in-out infinite forwards; /* Total duration for one full cycle */
+}
+
+/* Slideshow: second image fades and slides in, then out */
+.dashboard-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("https://www.paterostechnologicalcollege.edu.ph/ASSETS/IMAGES/COLLEGEPRESIDENT/arts.png"); /* Replace with your second image */
+  background-size: cover;
+  background-position: left center;
+  opacity: 0;
+  z-index: 1;
+  animation: header-slide-fade 10s infinite;
+  transition: opacity 0.1s;
+}
+
+/* Animate: fade in, stay, fade out */
+@keyframes header-slide-fade {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Ensure header content is above the slideshow */
+.dashboard-header .header-overlay,
+.dashboard-header .header-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Define the keyframes for the sliding animation of the pseudo-element */
+@keyframes slide-in-second-bg {
+  0% {
+    transform: translateX(100%); /* Start off-screen right */
+  }
+  100% {
+    transform: translateX(0%); /* Slide completely into view */
+  }
+}
+
+/* Assuming you also have a fade-in animation for the main header, if not, define it */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Adjusted to rgba() for adjustable transparency, default 0.7 for light overlay */
+  background: linear-gradient(
+    to right,
+    rgba(32, 28, 28, 0.027),
+    /* Very subtle dark transparent */ rgba(34, 180, 85, 0.1)
+      /* Light green transparent */
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+}
+
+.header-title {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+}
+
+.header-subtitle {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+}
+
+/* Info Cards Section (Green Bar below header) */
+.info-cards-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(
+    2,
+    35,
+    28,
+    0.9
+  ); /* Adjusted to rgba() for adjustable transparency */
+  padding: 30px 60px; /* Increased padding top/bottom and left/right for more space around */
+  gap: 40px; /* Increased gap between the cards for more separation */
+  flex-wrap: wrap;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Corrected alpha for shadow */
+  margin-top: 20px; /* ADDED: Pushes the section down from the header */
+  margin-bottom: 15px;
+  border-radius: 10px;
+
+  /* Animation properties */
+  animation-name: infoCardSectionBackgroundAnimation; /* Custom animation name */
+  animation-duration: 15s; /* Longer duration for a smoother, subtle change */
+  animation-iteration-count: infinite; /* Make it loop forever */
+  animation-timing-function: ease-in-out; /* Smooth start and end */
+  animation-direction: alternate; /* Play forwards then backwards */
+}
+
+/* IMPORTANT: If you want the animation to be transparent, you'll need to use rgba() in your keyframes too. */
+@keyframes infoCardSectionBackgroundAnimation {
+  0% {
+    background-color: rgba(
+      2,
+      35,
+      28,
+      0.9
+    ); /* Your original green, now with opacity */
+  }
+  25% {
+    background-color: rgba(
+      0,
+      77,
+      37,
+      0.9
+    ); /* A slightly lighter green, now with opacity */
+  }
+  50% {
+    background-color: rgba(
+      17,
+      130,
+      59,
+      0.9
+    ); /* A slightly darker green, now with opacity */
+  }
+  75% {
+    background-color: rgba(
+      36,
+      143,
+      36,
+      0.9
+    ); /* Back to lighter green, now with opacity */
+  }
+  100% {
+    background-color: rgba(
+      31,
+      122,
+      31,
+      0.9
+    ); /* Back to original, now with opacity */
+  }
+}
+
+/* Info Card Item Styles */
+.info-card {
+  display: flex;
+  align-items: center;
+  background-color: rgba(
+    142,
+    190,
+    136,
+    0.9
+  ); /* Adjusted to rgba() for adjustable transparency */
+  padding: 25px 30px; /* Increased padding for more internal space around icon and text */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Corrected alpha for shadow */
+  min-width: 280px;
+  flex: 1;
+  max-width: 350px;
+}
+
+.info-card-icon {
+  width: 60px; /* Increased icon size */
+  height: 60px; /* Increased icon size */
+  margin-right: 25px; /* Increased space to the right of the icon */
+  object-fit: contain;
+  border-radius: 5px;
+  background: rgba(
+    244,
+    247,
+    245,
+    0.9
+  ); /* Adjusted to rgba() for adjustable transparency */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.8rem; /* Adjusted for larger icons, especially if they are text/font-based */
+  box-shadow: 0 4px 16px rgba(44, 120, 29, 0.18);
+  filter: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.info-card-text {
+  font-family: "Inter", "Montserrat", Arial, sans-serif;
+  font-size: 1rem;
+  color: #333 !important; /* Ensure solid color */
+  -webkit-text-fill-color: #333 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  line-height: 1.4;
+}
+
+.info-card-highlight {
+  font-weight: bold;
+  color: #020202 !important; /* Your specified highlight color */
+  -webkit-text-fill-color: #f8fafd !important; /* Your specified highlight text fill color */
+  background: none !important;
+  -webkit-background-clip: unset !important;
+}
+
+/* Styles for Clickable Elements (Highlight on Hover) */
+.clickable-card,
+.clickable-list-item {
+  cursor: pointer; /* Indicate it's clickable */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
+}
+
+/* Hover effect for general cards */
+.clickable-card:hover {
+  transform: translateY(-5px); /* Lift effect */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  background-color: rgba(
+    233,
+    247,
+    239,
+    0.9
+  ); /* Adjusted to rgba() for adjustable transparency */
+}
+
+/* Hover effect for list items (announcements/important info) */
+.clickable-list-item:hover {
+  background-color: rgba(
+    247,
+    252,
+    249,
+    0.9
+  ); /* Adjusted to rgba() for adjustable transparency */
+  transform: translateX(5px); /* Slide slightly to the right */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Main Content Columns (Announcements and Important Information) */
+.dashboard-columns-container {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 30px;
+  padding: 30px 30px; /* ADJUSTED: Reduced horizontal padding for better layout */
+  margin-top: 20px; /* ADDED: Space above this section */
+  margin-bottom: 20px;
+  border-radius: 10px;
+  width: 100%; /* Adjust this percentage to control the width. You can also use a fixed pixel value like 1000px */
+  max-width: 8000px; /* Optional: Set a maximum width to prevent it from getting too large on very wide screens */
+  margin-left: auto; /* Centers the block-level element horizontally */
+  margin-right: auto; /* Centers the block-level element horizontally */
+  /* You can combine margin-top, margin-bottom, margin-left, margin-right into a shorthand: */
+  /* margin: 20px auto; */ /* This would apply 20px top/bottom margin and auto left/right */
+  box-shadow: #000000 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.4) 0px 4px 12px;
+  /* IMPORTANT: This background-image path is local and will NOT work on a web server.
+        You need to provide a publicly accessible URL or ensure the image
+        is correctly placed and referenced in your project's build. */
+  /* background-image: url('/bg.jpg'); REPLACED with a placeholder public URL */
+  background-color: rgba(
+    248,
+    248,
+    248,
+    0.9
+  ); /* Adjusted to rgba() for adjustable transparency */
+  background-size: cover;
+  background-position: 0px; /* Added to center the background image */
+}
+
+/* Responsive adjustment for single column on smaller screens */
+@media (max-width: 992px) {
+  .dashboard-columns-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.announcements-section,
+.info-section {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* Adjusted to rgba() for adjustable transparency */
+  /* Reduce padding to make content area smaller */
+  padding: 30px; /* Reduced from 60px */
+  /* Make border-radius smaller to match overall reduced size */
+  border-radius: 20px; /* Reduced from 60px */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Corrected alpha for shadow */
+
+  /* --- Additions to make the container small and center it --- */
+  width: 60%; /* Adjust this percentage or use a fixed pixel value like 500px */
+  max-width: 800px; /* Optional: Set a maximum width */
+  margin: 30px auto; /* Centers the element horizontally and adds vertical margin */
+}
+
+.section-title {
+  font-family: "Montserrat", "Inter", Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c781d !important;
+  -webkit-text-fill-color: #2c781d !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+/* Announcement List Styling */
+.announcement-list,
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.announcement-item,
+.info-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #e0e0e0;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: transparent; /* Default transparent */
+}
+
+.announcement-item:last-child,
+.info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.announcement-heading,
+.info-heading {
+  font-family: "Montserrat", "Inter", Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333 !important;
+  -webkit-text-fill-color: #333 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  margin-bottom: 5px;
+}
+
+.announcement-detail,
+.info-detail {
+  font-size: 0.95em;
+  color: #555 !important;
+  -webkit-text-fill-color: #555 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+}
+
+.announcement-date {
+  font-size: 0.8em;
+  color: #777 !important;
+  -webkit-text-fill-color: #777 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  display: block;
+  margin-bottom: 15px;
+}
+
+/* Button to "Click for more info" (if you keep it) */
+.info-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 15px;
+}
+
+.info-button:hover {
+  background-color: #ffffff;
+}
+
+.info-button:active {
+  transform: translateY(1px);
+}
+
+/* Academic Programs Section */
+/* Styles for the academic programs section */
+.academic-programs-section {
+  padding: 30px 40px;
+  color: #f5f0f0; /* Dark gray for readability against the background, though overridden for heading */
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent white (70% opacity) for adjustability */
+  border-radius: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  margin-bottom: 30px;
+
+  /* Added Background Image Properties */
+  background-image: url("https://www.paterostechnologicalcollege.edu.ph/ASSETS/IMAGES/ABOUTUS/Mission%20Picture.png"); /* Replace with your actual image URL */
+  /* background-blend-mode: 20px;  This line is incorrect and should be removed or corrected if intended for blending */
+  background-color: #054b0fa1;
+  background-size: cover; /* Ensures the image covers the entire section */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-blend-mode: overlay; /* Blends the image with the background-color */
+}
+
+/* New rule to make the "Academic Programs" text white */
+/* Assuming "Academic Programs" is an <h1> or <h2> directly inside .academic-programs-section */
+.academic-programs-section h1,
+.academic-programs-section h2 {
+  color: white; /* Make the text white */
+  -webkit-text-fill-color: white !important; /* Ensure it overrides any specific -webkit-text-fill-color */
+  background: none !important; /* Ensure no background is applied to the text itself */
+  -webkit-background-clip: unset !important; /* Ensure no background clipping affects the text */
+  /* If there's an underline from the image, you might need to adjust or remove it here */
+  border-bottom: none; /* Example: if there's a border-bottom you want to remove */
+}
+
+/* If "Academic Programs" has its own specific class, use that instead, e.g.: */
+/*
+.academic-programs-title {
+    color: white;
+    -webkit-text-fill-color: white !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    border-bottom: none;
+}
+*/
+
+.academic-programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.program-card {
+  background-color: rgba(
+    249,
+    249,
+    249,
+    0.8
+  ); /* Adjusted to rgba() for adjustable transparency */
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+
+.program-heading {
+  font-family: "Montserrat", "Inter", Arial, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2c781d !important;
+  -webkit-text-fill-color: #2c781d !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.program-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.program-list li {
+  font-family: "Montserrat", "Inter", Arial, sans-serif;
+  font-size: 1rem;
+  color: #555 !important;
+  -webkit-text-fill-color: #555 !important;
+  /* Option A: If you want each list item to have its own transparent white background */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* Transparent white for each list item */
+  /* Option B: If you want list items to be completely transparent and show parent's background */
+  /* background: none !important; */
+  /* Remove background: none !important; if using Option A */
+  -webkit-background-clip: unset !important;
+  margin-bottom: 8px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 15px;
+}
+
+.program-list li::before {
+  content: "•";
+  color: #2c781d;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.program-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Contact Information Section */
+.contact-info-section {
+  padding: 30px 40px;
+  color: #333; /* Changed to a dark gray for readability against the background */
+  background-color: rgba(255, 255, 255, 0.7); /* Adjustable transparent white */
+  border-radius: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  margin-bottom: 30px;
+}
+
+.contact-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.contact-address,
+.contact-numbers,
+.contact-email,
+.contact-hours {
+  background-color: rgba(
+    249,
+    249,
+    249,
+    0.3
+  ); /* Adjusted to rgba() for adjustable transparency */
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+
+.contact-heading {
+  font-family: "Inter", "Montserrat", Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c781d !important;
+  -webkit-text-fill-color: #2c781d !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  margin-bottom: 10px;
+}
+
+.contact-address p,
+.contact-numbers p,
+.contact-email p,
+.contact-hours p {
+  font-family: "Inter", "Montserrat", Arial, sans-serif;
+  font-size: 0.95rem;
+  color: #555 !important;
+  -webkit-text-fill-color: #555 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* --- New Styles for Announcement Detail Page --- */
+.announcement-detail-page {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.9
+  ); /* Adjusted to rgba() for adjustable transparency */
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  margin: 30px 40px; /* Adjust margin as needed */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.announcement-page-title {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c781d !important; /* Green for title */
+  -webkit-text-fill-color: #2c781d !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  margin-bottom: 10px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #eee;
+}
+
+.announcement-page-date {
+  font-size: 0.9em;
+  color: #13b30e9c !important; /* Standard text color */
+  -webkit-text-fill-color: #149710a2 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.announcement-page-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333 !important; /* Standard text color */
+  -webkit-text-fill-color: #333 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  white-space: pre-wrap; /* Preserves whitespace and line breaks */
+}
+
+.back-button {
+  background-color: #2c781d;
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: inline-flex; /* To allow arrow icon */
+  align-items: center;
+  gap: 8px; /* Space between arrow and text */
+}
+
+.back-button:hover {
+  background-color: #246018;
+  transform: translateY(-2px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+/* Dashboard Header Slideshow */
+.dashboard-header-slideshow {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.slide-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: left center;
+  transition: transform 2s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 1;
+}
+
+.slide-img.current {
+  transform: translateX(0%);
+  z-index: 2;
+}
+
+.slide-img.current.sliding-out {
+  transform: translateX(0%);
+}
+
+.slide-img.next.sliding-in {
+  transform: translateX(50%);
+}
+
+.slide-img.next.sliding-in {
+  transform: translateX(50%);
+}
+
+.dashboard-header-slideshow .header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  /* Your overlay styles here */
+  background: linear-gradient(
+    to right,
+    rgba(32, 28, 28, 0.027),
+    rgba(34, 180, 85, 0.1)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .dashboard-main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .dashboard-header {
+    height: 180px;
+    padding: 15px 20px;
+  }
+
+  .header-title {
+    font-size: 2rem;
+  }
+
+  .header-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .info-cards-section {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .info-card {
+    min-width: unset;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .dashboard-columns-container {
+    grid-template-columns: 1fr;
+    padding: 20px; /* This padding will apply for mobile */
+  }
+
+  .announcements-section,
+  .info-section,
+  .academic-programs-section,
+  .contact-info-section,
+  .announcement-detail-page {
+    /* Add detail page here */
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  }
+
+  .academic-programs-grid,
+  .contact-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .announcement-heading,
+  .info-heading,
+  .program-heading,
+  .contact-heading,
+  .announcement-page-title {
+    /* Adjust title font size */
+    font-size: 1.1em;
+  }
+  .announcement-page-content {
+    /* Adjust content font size */
+    font-size: 1rem;
+  }
+  .back-button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Even smaller screens (e.g., mobile phones) */
+@media (max-width: 480px) {
+  .dashboard-main-content {
+    padding: 10px;
+  }
+
+  .dashboard-header {
+    height: 150px;
+    padding: 10px 15px;
+  }
+
+  .header-title {
+    font-size: 1.8rem;
+  }
+
+  .header-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .info-cards-section {
+    padding: 10px 15px;
+  }
+
+  .announcements-section,
+  .info-section,
+  .academic-programs-section,
+  .contact-info-section,
+  .announcement-detail-page {
+    /* Adjust detail page padding */
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  .announcement-page-title {
+    font-size: 1.8rem;
+  }
+  .announcement-page-content {
+    font-size: 0.9rem;
+  }
+}

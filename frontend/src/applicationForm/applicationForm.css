@@ -1,0 +1,220 @@
+.application-form-container {
+  max-width: 900px;
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px 0 rgba(44, 120, 29, 0.10);
+  margin-top: 100px;
+  padding: 36px 38px 32px 38px;
+}
+
+.application-form-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a3d1a;
+  letter-spacing: 0.01em;
+}
+
+.application-form-section {
+  margin-bottom: 32px;
+}
+
+.application-form-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #145c0c;
+  margin-bottom: 10px;
+}
+
+.application-form-section-desc {
+  font-size: 1rem;
+  color: #5d7c6e;
+  margin-bottom: 18px;
+}
+
+/* --- GRID ALIGNMENT FIX --- */
+.application-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 32px;
+  align-items: start;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  /* Center grid horizontally */
+  justify-content: center;
+}
+
+@media (max-width: 700px) {
+  .application-form-grid {
+    grid-template-columns: 1fr;
+    gap: 20px 0;
+    margin-top: 8px;
+  }
+  .application-form-container {
+    padding: 16px 4vw 16px 4vw;
+  }
+}
+
+.application-form-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  color: #222;
+  font-weight: 500;
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: flex-start;
+}
+
+.application-form-label span {
+  margin-bottom: 8px;
+  font-weight: 600;
+  min-height: 28px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.application-form-input,
+.application-form-select {
+  padding: 16px 18px;
+  border: 1.5px solid #d6e9d6;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  background: #f7faf8;
+  color: #1a3d1a;
+  transition: border 0.18s, box-shadow 0.18s;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.application-form-input:focus,
+.application-form-select:focus {
+  border: 1.5px solid #40db61;
+  background: #fff;
+  box-shadow: 0 0 0 2px #b8ffb8;
+}
+
+.application-form-button {
+  margin-top: 24px;
+  width: 100%;
+  background: linear-gradient(135deg, #40db61 60%, #2c781d 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.16s;
+  box-shadow: 0 2px 12px rgba(44, 120, 29, 0.10);
+  margin-left: auto;
+  margin-right: 0;
+  display: block;
+}
+
+.application-form-button:hover,
+.application-form-button:focus {
+  background: linear-gradient(135deg, #2c781d 60%, #40db61 100%);
+  transform: scale(1.03);
+  box-shadow: 0 4px 18px rgba(44, 120, 29, 0.13);
+}
+
+.application-form-required {
+  color: #e53935;
+  margin-left: 2px;
+}
+
+.application-form-row {
+  display: flex;
+  gap: 18px;
+}
+
+.application-form-row > * {
+  flex: 1;
+}
+
+/* Make full-width fields (like Complete Address) span both columns */
+.application-form-label.full-width,
+.application-form-label[style*="grid-column"] {
+  grid-column: 1 / -1 !important;
+}
+
+.application-form-label.full-width {
+  margin-bottom: 0;
+}
+
+/* --- Province Alignment Fix --- */
+.application-form-label.province-align {
+  /* Removed for alignment */
+}
+
+/* Highlighted Section Styling */
+.application-form-section-highlight {
+  background: #e4ffea;
+  border: 1.5px solid #d6e9d6;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(44, 120, 29, 0.04);
+  padding: 22px 28px 14px 28px;
+  margin-bottom: 28px;
+}
+
+.application-form-highlight-label {
+  font-weight: 700;
+  color: #228c22;
+}
+
+.application-form-highlight-value {
+  color: #1a3d1a;
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .application-form-section-highlight {
+    padding: 12px 4vw 10px 4vw;
+  }
+}
+
+/* Review & Submit Section Styling */
+.application-form-review-card {
+  background: #f7faf8;
+  border-radius: 14px;
+  padding: 28px 32px 18px 32px;
+  box-shadow: 0 2px 16px rgba(44, 120, 29, 0.07);
+  margin-bottom: 32px;
+  max-width: 600px;
+}
+
+.application-form-review-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.application-form-review-item {
+  margin-bottom: 14px;
+  font-size: 1.08rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.application-form-review-label {
+  font-weight: 700;
+  min-width: 210px;
+  color: #228c22;
+}
+
+.application-form-review-value {
+  color: #222;
+  margin-left: 6px;
+}
+
+/* When messages-sidebar is expanded, push main content further right */
+.messages-sidebar:not(.collapsed) + .application-form-container {
+    margin-left: 488px; /* 68px fixed + 220px expanded */
+}
+.application-form-review-empty {
+  color: #aaa;
+}

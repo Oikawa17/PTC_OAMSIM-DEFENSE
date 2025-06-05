@@ -1,0 +1,226 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.login-left {
+  width: 55vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  /* Removed background-image for ptcfront.png */
+}
+
+/* Green overlay */
+.login-left::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 128, 0, 0.3); /* Green tint */
+    z-index: 2;
+}
+
+/* Add this for the video background */
+.login-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.login-right {
+  width: 55vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('./images/bglogo.png') no-repeat center;
+  background-size: cover;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+login-right::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.login-form {
+  text-align: center;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: auto;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-form:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.login-logo-container {
+    text-align: center;
+    align-items: center;
+    margin-bottom: -80px;
+    margin-top: 30px;
+}
+
+.login-logo {
+    width: 150px;
+    display: block;
+    margin: 0 auto 15px;
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 16px;
+  transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+input:hover {
+  border-color: #0073e6;
+  box-shadow: 0px 4px 8px rgba(0, 115, 230, 0.3);
+}
+
+button {
+  width: 96%;
+  padding: 12px;
+  background: #20C40E;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+button:hover {
+  background: #2C781D;
+  transform: scale(1.09);
+}
+
+p a {
+  color: #0073e6;
+  text-decoration: none;
+  transition: color 0.6s ease-in-out;
+}
+
+p a:hover {
+  text-decoration: underline;
+  color: #005bb5;
+}
+
+p {
+  color: #000000;
+  font-size: 20px;
+  margin-top: 10px;
+  font-family: 'Applied Sans Pro Condensed', sans-serif;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-container input {
+  width: 90%;
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background: rgb(255, 255, 255);
+  color: #30a800;
+}
+
+.input-container label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  transition: 0.3s ease-in-out;
+  pointer-events: none;
+  color: #979797;
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+  top: -5px;
+  left: 12px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.error-message {
+  color: rgba(255, 238, 0, 0.795);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-form {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@media (max-width: 600px) {
+  .login-form {
+    padding: 20px;
+    backdrop-filter: blur(6px);
+  }
+
+  .input-container input,
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+h2 {
+  font-size: 30px;
+  color: #ffffff;
+  margin-bottom: 5px;
+  font-family: 'Applied Sans Pro Condensed', sans-serif;
+}
+
+h3 {
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-family: 'Applied Sans Pro Condensed', sans-serif;
+}
