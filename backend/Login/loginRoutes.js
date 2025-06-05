@@ -40,17 +40,11 @@ router.post('/', (req, res) => {
         if (password !== user.password) {
           return res.status(401).send('Incorrect password');
         }
-        if (password !== user.password) {
-          return res.status(401).send('Incorrect password');
-        }
         createFolder(application_id);
         return res.status(200).json({ changePassword: true, application_id: user.application_id });
       }
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) return res.status(401).send('Incorrect password');
       createFolder(application_id);
       res.status(200).json({ dashboard: true, application_id: user.application_id });
-
       // ✅ Insert application_id into doc_uploaded if it doesn’t exist
       db.query(
         `INSERT INTO doc_uploaded (application_id) 
