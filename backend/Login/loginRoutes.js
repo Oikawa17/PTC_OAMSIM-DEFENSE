@@ -23,7 +23,8 @@ const createFolder = (application_id) => {
   }
 };
 
-router.post('/', (req, res) => {
+// ✅ Modified Login Route
+router.post('/', async (req, res) => {
   const { application_id, password } = req.body;
 
   db.query(
@@ -34,17 +35,29 @@ router.post('/', (req, res) => {
 
       const user = results[0];
       if (!user) return res.status(404).send('User not found');
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) return res.status(401).send('Incorrect password');
+
+      console.log("Stored password:", user.password);
+      console.log("Entered password:", password);
+// Ensure proper password verification
+if (user.is_temp) {
+  // If the password is still in plaintext, compare directly
+  if (password !== user.password) {
+    return res.status(401).send('Incorrect password');
+  }
+} else {
+  // If password is hashed, use bcrypt.compare()
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return res.status(401).send('Incorrect password');
+}
+      // ✅ Handle temp passwords correctly
       if (user.is_temp) {
-        if (password !== user.password) {
-          return res.status(401).send('Incorrect password');
-        }
         createFolder(application_id);
         return res.status(200).json({ changePassword: true, application_id: user.application_id });
       }
+
       createFolder(application_id);
       res.status(200).json({ dashboard: true, application_id: user.application_id });
+
       // ✅ Insert application_id into doc_uploaded if it doesn’t exist
       db.query(
         `INSERT INTO doc_uploaded (application_id) 
@@ -54,7 +67,6 @@ router.post('/', (req, res) => {
         (err) => {
           if (err) {
             console.error("Database Insert Error:", err);
-            // Don't send error to client here, since login already succeeded
           }
           console.log(`Application ID ${application_id} inserted into doc_uploaded if missing.`);
         }
@@ -63,11 +75,12 @@ router.post('/', (req, res) => {
   );
 });
 
+// ✅ Modified Password Change Route
 router.post('/change-password', async (req, res) => {
   const { application_id, newPassword } = req.body;
 
   try {
-    // Hash the new password before storing it
+    // ✅ Hash new password before storing it
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     const query = 'UPDATE student_info SET password = ?, is_temp = 0 WHERE application_id = ?';
